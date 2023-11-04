@@ -1,12 +1,11 @@
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import theme from "./styles/themes/theme";
+
 function App() {
   return (
-    <h1
-      style={{
-        fontSize: "var(--fs-primary-heading)",
-      }}
-    >
-      Getting Started
-    </h1>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+    </ThemeProvider>
   );
 }
 
