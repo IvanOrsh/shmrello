@@ -43,7 +43,9 @@ const AuthPage = () => {
       <Stack spacing={2}>
         <TextField label="Email" />
         <TextField label="Password" />
-        <Button variant="outlined">Login</Button>
+        <Button size="large" variant="outlined">
+          Login
+        </Button>
         <Typography textAlign="center">Do not have an account?</Typography>
       </Stack>
     </Container>
