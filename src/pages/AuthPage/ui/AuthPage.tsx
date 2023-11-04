@@ -6,11 +6,11 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-
-import ImageEl from "../../../shared/ui/ImageEl/ImageEl";
-import logoDark from "../../../shared/assets/shmrello-logo-dark.svg";
-import { auth } from "../../../firebase";
 import { FirebaseError } from "firebase/app";
+
+import ImageEl from "@shared/ui/ImageEl/ImageEl";
+import logoDark from "@shared/assets/shmrello-logo-dark.svg";
+import { auth } from "@app/firebase";
 
 type AuthForm = {
   email: string;
