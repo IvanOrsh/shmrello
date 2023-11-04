@@ -6,6 +6,8 @@ import {
   Typography,
 } from "@mui/material";
 
+import ImageEl from "../../../shared/ui/ImageEl/ImageEl";
+
 import logoImg from "../../../shared/assets/shmrello-logo.svg";
 
 const AuthPage = () => {
@@ -13,7 +15,7 @@ const AuthPage = () => {
     <Container>
       <Stack>
         <div>
-          <img src={logoImg} alt="logo" />
+          <ImageEl src={logoImg} alt="logo" />
         </div>
         <Typography variant="h1" component="h2">
           AuthPage
