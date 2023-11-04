@@ -1,10 +1,44 @@
-import { Container, Stack, TextField, Button, Typography } from "@mui/material";
+import React, { useState } from "react";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+
+import { Container, Stack, Typography } from "@mui/material";
 
 import ImageEl from "../../../shared/ui/ImageEl/ImageEl";
-
 import logoImg from "../../../shared/assets/shmrello-logo.svg";
 
+type AuthForm = {
+  email: string;
+  password: string;
+};
+
+const initForm: AuthForm = {
+  email: "",
+  password: "",
+};
+
 const AuthPage = () => {
+  const [isLogged, setIsLogged] = useState(false);
+  const authText = isLogged
+    ? "Don not have an account"
+    : "Already have an account?";
+  const [form, setForm] = useState(initForm);
+  const onChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const values = Object.fromEntries(formData.entries());
+    console.log(values);
+  };
+
   return (
     <Container
       maxWidth="xs"
@@ -40,13 +74,38 @@ const AuthPage = () => {
         </Stack>
       </Stack>
 
-      <Stack spacing={2}>
-        <TextField label="Email" />
-        <TextField label="Password" />
-        <Button size="large" variant="outlined">
-          Login
+      {/* Login/Register - TODO: to be extracted! */}
+
+      <Stack spacing={4}>
+        <form autoComplete="off" onSubmit={handleSubmit}>
+          <Stack spacing={2}>
+            <TextField
+              label="Email"
+              name="email"
+              value={form.email}
+              onChange={onChangeHandler}
+            />
+
+            <TextField
+              label="Password"
+              name="password"
+              value={form.password}
+              onChange={onChangeHandler}
+            />
+            <Button
+              disabled={!form.email.trim() || !form.password.trim()}
+              type="submit"
+              size="large"
+              variant="outlined"
+            >
+              {isLogged ? "Login" : "Register"}
+            </Button>
+          </Stack>
+        </form>
+
+        <Button variant="text" onClick={() => setIsLogged((prev) => !prev)}>
+          {authText}
         </Button>
-        <Typography textAlign="center">Do not have an account?</Typography>
       </Stack>
     </Container>
   );
