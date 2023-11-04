@@ -19,7 +19,7 @@ function App() {
     console.log(userQuery.isLoggedIn, userQuery.loader);
 
     return () => unsub();
-  }, []);
+  }, [setLoginStatus, userQuery.isLoggedIn, userQuery.loader]);
 
   if (userQuery.loader) {
     return <AppLoader />;
