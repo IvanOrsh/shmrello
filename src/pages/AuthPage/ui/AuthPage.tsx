@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-
 import { Container, Stack, Typography } from "@mui/material";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 
 import ImageEl from "../../../shared/ui/ImageEl/ImageEl";
-import logoImg from "../../../shared/assets/shmrello-logo.svg";
+import logoDark from "../../../shared/assets/shmrello-logo-dark.svg";
+import { auth } from "../../../firebase";
+import { FirebaseError } from "firebase/app";
 
 type AuthForm = {
   email: string;
@@ -18,6 +23,7 @@ const initForm: AuthForm = {
 };
 
 const AuthPage = () => {
+  const [isLoading, setLoading] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
   const authText = isLogged
     ? "Don not have an account"
@@ -35,8 +41,32 @@ const AuthPage = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const values = Object.fromEntries(formData.entries());
-    console.log(values);
+    const values = Object.fromEntries(formData.entries()) as AuthForm;
+
+    try {
+      setLoading(true);
+
+      if (isLogged) {
+        await signInWithEmailAndPassword(auth, values.email, values.password);
+      } else {
+        await createUserWithEmailAndPassword(
+          auth,
+          values.email,
+          values.password
+        );
+      }
+    } catch (err: unknown) {
+      if (err instanceof FirebaseError) {
+        const [_, error] = err.code.split("/");
+        if (error) {
+          const message = error.split("-").join(" ");
+          console.log(message);
+        }
+      }
+      setLoading(false);
+    } finally {
+      // setLoading here?
+    }
   };
 
   return (
@@ -47,9 +77,7 @@ const AuthPage = () => {
       }}
     >
       <Stack mb={6} spacing={4} alignItems="center" textAlign="center">
-        <div>
-          <ImageEl src={logoImg} alt="logo" />
-        </div>
+        <ImageEl src={logoDark} alt="logo" />
         <Stack>
           <Typography
             // color="rgba(255, 255, 255, .6)"
@@ -93,7 +121,9 @@ const AuthPage = () => {
               onChange={onChangeHandler}
             />
             <Button
-              disabled={!form.email.trim() || !form.password.trim()}
+              disabled={
+                isLoading || !form.email.trim() || !form.password.trim()
+              }
               type="submit"
               size="large"
               variant="outlined"
