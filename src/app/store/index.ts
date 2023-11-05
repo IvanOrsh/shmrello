@@ -14,6 +14,7 @@ interface UserQueryStore {
   userQuery: UserQuery;
   setLoginStatus: (status: boolean) => void;
   setBoards: (boards: Board[]) => void;
+  addBoard: (board: Board) => void;
 }
 
 const useUserStore = create<UserQueryStore>((set) => ({
@@ -39,6 +40,14 @@ const useUserStore = create<UserQueryStore>((set) => ({
         ...store.userQuery,
         boards,
         areBoardsFetched: true,
+      },
+    })),
+
+  addBoard: (board) =>
+    set((store) => ({
+      userQuery: {
+        ...store.userQuery,
+        boards: [...store.userQuery.boards.concat(board)],
       },
     })),
 }));

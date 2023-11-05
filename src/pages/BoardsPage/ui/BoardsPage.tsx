@@ -36,11 +36,11 @@ const BoardsPage = () => {
         <NoBoards />
       ) : (
         <Boards
-          boards={boards.map((board) => ({
-            id: board.id,
-            name: board.name,
-            color: board.color,
-            createdAt: `${board.createdAt}`,
+          boards={boards.map(({ id, name, color, createdAt }) => ({
+            id,
+            name,
+            color,
+            createdAt,
           }))}
         />
       )}
