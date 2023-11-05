@@ -23,7 +23,7 @@ const useCreateBoard = () => {
     }
   };
 
-  return { createBoard };
+  return createBoard;
 };
 
 export default useCreateBoard;
