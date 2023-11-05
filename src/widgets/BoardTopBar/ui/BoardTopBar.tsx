@@ -5,6 +5,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 const BoardTopBar = () => {
   return (
     <AppBar
+      position="static"
       sx={(theme) => ({
         borderBottom: "5px solid",
         borderColor: theme.palette.secondary.main,
