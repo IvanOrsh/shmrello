@@ -1,32 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { CreateBoardModal } from "@features/createBoard";
 import { TopBar } from "@widgets/TopBar";
 import { NoBoards, Boards, Board, colors } from "@entities/Board";
-
-const boards: Board[] = [
-  {
-    id: "1",
-    name: "New Board",
-    color: colors[0],
-    createdAt: "5/25/25",
-  },
-  {
-    id: "2",
-    name: "New Board1",
-    color: colors[1],
-    createdAt: "5/27/25",
-  },
-  {
-    id: "3",
-    name: "New Board2",
-    color: colors[2],
-    createdAt: "5/25/25",
-  },
-];
+import useFetchBoards from "@entities/Board/model/service/fetchBoards";
+import useUserStore from "@app/store";
+import AppLoader from "@shared/ui/AppLoader/AppLoader";
 
 const BoardsPage = () => {
+  const {
+    userQuery: { areBoardsFetched, boards },
+  } = useUserStore();
+
+  const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const fetchBoards = useFetchBoards();
+
+  useEffect(() => {
+    if (!areBoardsFetched) {
+      fetchBoards(setLoading);
+    } else {
+      setLoading(false);
+    }
+  }, [areBoardsFetched, fetchBoards]);
+
+  if (loading) return <AppLoader />;
 
   return (
     <>
@@ -34,8 +32,18 @@ const BoardsPage = () => {
 
       <CreateBoardModal open={showModal} setOpen={setShowModal} />
 
-      {/* <NoBoards /> */}
-      <Boards boards={boards} />
+      {boards.length === 0 || !areBoardsFetched ? (
+        <NoBoards />
+      ) : (
+        <Boards
+          boards={boards.map((board) => ({
+            id: board.id,
+            name: board.name,
+            color: board.color,
+            createdAt: `${board.createdAt}`,
+          }))}
+        />
+      )}
     </>
   );
 };

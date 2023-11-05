@@ -8,8 +8,9 @@ import {
   Button,
 } from "@mui/material";
 
-import { colors } from "@entities/Board/model/colorsForTasks";
+import { colors } from "@entities/Board";
 import ModalHeader from "@shared/ui/ModalHeader/ModalHeader";
+import useCreateBoard from "../../model/service/createBoard";
 
 type CreateBoardModalProps = {
   open: boolean;
@@ -17,11 +18,28 @@ type CreateBoardModalProps = {
 };
 
 const CreateBoardModal = ({ open, setOpen }: CreateBoardModalProps) => {
+  const createBoard = useCreateBoard();
+
   const [name, setName] = useState("");
-  const [color, setColor] = useState(0);
+  const [selectedColor, setSelectedColor] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleCreate = async () => {
+    try {
+      setLoading(true);
+      await createBoard({ name, color: colors[selectedColor] });
+      handleClose();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+      setName("");
+      setSelectedColor(0);
+    }
   };
 
   return (
@@ -40,10 +58,10 @@ const CreateBoardModal = ({ open, setOpen }: CreateBoardModalProps) => {
               <Box
                 sx={{
                   cursor: "pointer",
-                  border: `${color === idx ? "3px solid #383838" : ""}`,
+                  border: `${selectedColor === idx ? "3px solid #383838" : ""}`,
                   outline: `2px solid ${clr} `,
                 }}
-                onClick={() => setColor(idx)}
+                onClick={() => setSelectedColor(idx)}
                 key={clr}
                 height={25}
                 width={25}
@@ -53,7 +71,9 @@ const CreateBoardModal = ({ open, setOpen }: CreateBoardModalProps) => {
             ))}
           </Stack>
         </Stack>
-        <Button variant="contained">Create Board</Button>
+        <Button disabled={loading} onClick={handleCreate} variant="contained">
+          Create Board
+        </Button>
       </Stack>
     </Dialog>
   );
