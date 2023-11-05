@@ -7,13 +7,25 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-import { onRequest } from "firebase-functions/v2/https";
-import * as logger from "firebase-functions/logger";
+import { onDocumentCreated } from "firebase-functions/v2/firestore";
+import { initializeApp } from "firebase-admin/app";
+import { getFirestore, FieldValue } from "firebase-admin/firestore";
 
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
+initializeApp();
 
-export const helloWorld = onRequest((request, response) => {
-  logger.info("Hello logs!", { structuredData: true });
-  response.send("Hello from Firebase!");
-});
+export const createBoardData = onDocumentCreated(
+  "users/{uid}/boards/{boardId}",
+  async (event) => {
+    const { uid, boardId } = event.params;
+    const firestore = getFirestore();
+
+    return await firestore.doc(`users/${uid}/boardsData/${boardId}`).set({
+      tabs: {
+        todos: [],
+        inProgress: [],
+        completed: [],
+      },
+      lastUpdated: FieldValue.serverTimestamp(),
+    });
+  }
+);
