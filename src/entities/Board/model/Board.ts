@@ -1,10 +1,12 @@
 export type Board = {
+  id: string;
   name: string;
   color: string;
-  createdAt: Date;
+  createdAt: string;
 };
 
 export type BoardData = {
-  updatedAt: Date;
+  id: string;
+  updatedAt: string;
   tabs: string[];
 };

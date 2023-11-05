@@ -1,11 +1,29 @@
 import { useState } from "react";
-import { Stack, Grid, Typography, IconButton, Box } from "@mui/material";
-import OpenIcon from "@mui/icons-material/Launch";
 
 import { CreateBoardModal } from "@features/createBoard";
 import { TopBar } from "@widgets/TopBar";
-import { NoBoards } from "@entities/Board";
-import { colors } from "@features/createBoard/ui/CreateBoardModal/colorsForTasks";
+import { NoBoards, Boards, Board, colors } from "@entities/Board";
+
+const boards: Board[] = [
+  {
+    id: "1",
+    name: "New Board",
+    color: colors[0],
+    createdAt: "5/25/25",
+  },
+  {
+    id: "2",
+    name: "New Board1",
+    color: colors[1],
+    createdAt: "5/27/25",
+  },
+  {
+    id: "3",
+    name: "New Board2",
+    color: colors[2],
+    createdAt: "5/25/25",
+  },
+];
 
 const BoardsPage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -17,35 +35,7 @@ const BoardsPage = () => {
       <CreateBoardModal open={showModal} setOpen={setShowModal} />
 
       {/* <NoBoards /> */}
-
-      <Stack p={3} mt={5}>
-        <Grid container>
-          <Grid item xs={3}>
-            <Stack
-              p={2}
-              bgcolor="background.paper"
-              borderLeft="5px solid"
-              borderColor={colors[0]}
-            >
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Typography fontWeight={400} variant="h6">
-                  Board name
-                </Typography>
-                <IconButton>
-                  <OpenIcon />
-                </IconButton>
-              </Stack>
-              <Typography variant="caption">
-                Created at {new Date().toISOString()}
-              </Typography>
-            </Stack>
-          </Grid>
-        </Grid>
-      </Stack>
+      <Boards boards={boards} />
     </>
   );
 };

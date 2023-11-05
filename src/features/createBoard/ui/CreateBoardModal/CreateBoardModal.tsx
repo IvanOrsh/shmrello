@@ -8,7 +8,7 @@ import {
   Button,
 } from "@mui/material";
 
-import { colors } from "./colorsForTasks";
+import { colors } from "@entities/Board/model/colorsForTasks";
 import ModalHeader from "@shared/ui/ModalHeader/ModalHeader";
 
 type CreateBoardModalProps = {
