@@ -11,18 +11,23 @@ import {
 import { colors } from "./colorsForTasks";
 import ModalHeader from "@shared/ui/ModalHeader/ModalHeader";
 
-const CreateBoardModal = () => {
-  const [open, setOpen] = useState(true);
+type CreateBoardModalProps = {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const CreateBoardModal = ({ open, setOpen }: CreateBoardModalProps) => {
   const [name, setName] = useState("");
   const [color, setColor] = useState(0);
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <Dialog open={open} fullWidth maxWidth="xs">
+    <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
       <Stack p={2}>
-        <ModalHeader
-          title="Create Board"
-          onClose={() => setOpen((prev) => !prev)}
-        />
+        <ModalHeader title="Create Board" onClose={handleClose} />
         <Stack my={5} spacing={3}>
           <TextField
             label="Board name"
@@ -48,7 +53,7 @@ const CreateBoardModal = () => {
             ))}
           </Stack>
         </Stack>
-        <Button variant="contained">Create</Button>
+        <Button variant="contained">Create Board</Button>
       </Stack>
     </Dialog>
   );

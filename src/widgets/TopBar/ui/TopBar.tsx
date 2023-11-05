@@ -4,7 +4,11 @@ import ImageEl from "@shared/ui/ImageEl/ImageEl";
 import logoImg from "@shared/assets/shmrello-logo-dark.svg";
 import LogoutIcon from "@mui/icons-material/ExitToApp";
 
-const TopBar = () => {
+type TopBarProps = {
+  openModal: () => void;
+};
+
+const TopBar = ({ openModal }: TopBarProps) => {
   return (
     <AppBar position="static">
       <Toolbar
@@ -20,7 +24,9 @@ const TopBar = () => {
         />
 
         <Stack direction="row" spacing={2}>
-          <Button variant="contained">Create Board</Button>
+          <Button onClick={openModal} variant="contained">
+            Create Board
+          </Button>
           <Button startIcon={<LogoutIcon />} color="inherit">
             Logout
           </Button>
