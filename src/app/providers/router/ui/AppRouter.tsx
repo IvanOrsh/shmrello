@@ -2,8 +2,9 @@ import { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import PublicOnlyRoute from "./PublicOnlyRoute";
-import { AuthPage } from "../../../../pages/AuthPage";
-import { BoardsPage } from "../../../../pages/BoardsPage";
+import { AuthPage } from "@pages/AuthPage";
+import { BoardsPage } from "@pages/BoardsPage";
+import { BoardPage } from "@pages/BoardPage";
 import PrivateOnlyRoute from "./PrivateOnlyRoute";
 
 const AppRouter = () => {
@@ -23,6 +24,14 @@ const AppRouter = () => {
           element={
             <PrivateOnlyRoute>
               <BoardsPage />
+            </PrivateOnlyRoute>
+          }
+        />
+        <Route
+          path="/boards/:boardId"
+          element={
+            <PrivateOnlyRoute>
+              <BoardPage />
             </PrivateOnlyRoute>
           }
         />

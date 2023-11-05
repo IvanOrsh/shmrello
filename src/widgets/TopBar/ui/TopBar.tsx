@@ -1,14 +1,20 @@
 import { AppBar, Toolbar, Button, Stack } from "@mui/material";
+import { signOut } from "firebase/auth";
 
 import ImageEl from "@shared/ui/ImageEl/ImageEl";
 import logoImg from "@shared/assets/shmrello-logo-dark.svg";
 import LogoutIcon from "@mui/icons-material/ExitToApp";
+import { auth } from "@app/firebase";
 
 type TopBarProps = {
   openModal: () => void;
 };
 
 const TopBar = ({ openModal }: TopBarProps) => {
+  const logoutHandler = () => {
+    signOut(auth);
+  };
+
   return (
     <AppBar position="static">
       <Toolbar
@@ -27,7 +33,11 @@ const TopBar = ({ openModal }: TopBarProps) => {
           <Button onClick={openModal} variant="contained">
             Create Board
           </Button>
-          <Button startIcon={<LogoutIcon />} color="inherit">
+          <Button
+            onClick={logoutHandler}
+            startIcon={<LogoutIcon />}
+            color="inherit"
+          >
             Logout
           </Button>
         </Stack>

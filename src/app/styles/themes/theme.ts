@@ -47,6 +47,12 @@ const theme: Theme = createTheme({
         },
       },
     },
+
+    MuiIconButton: {
+      defaultProps: {
+        size: "small",
+      },
+    },
   },
 
   shape: {
