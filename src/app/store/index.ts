@@ -34,6 +34,8 @@ const useUserStore = create<UserQueryStore>((set) => ({
         ...store.userQuery,
         isLoggedIn: status,
         loader: false,
+        boards: [],
+        areBoardsFetched: false,
       },
     })),
 

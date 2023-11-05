@@ -7,7 +7,7 @@ import useUserStore from "@app/store";
 
 const useCreateBoard = () => {
   const { currentUser } = getAuth();
-  const { addBoard } = useUserStore();
+  const { addBoard, setToaster } = useUserStore();
 
   const createBoard = async ({ name, color }: CreateBoard) => {
     const colRef = collection(db, `users/${currentUser?.uid}/boards`);
@@ -25,7 +25,9 @@ const useCreateBoard = () => {
         createdAt: new Date().toLocaleDateString(),
       });
     } catch (err) {
+      const error = err as Error;
       // TODO: showing the msg in toastr
+      setToaster(error.message);
       console.log(err);
       throw err;
     }

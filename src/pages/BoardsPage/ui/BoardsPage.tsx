@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { CreateBoardModal } from "@features/createBoard";
 import { TopBar } from "@widgets/TopBar";
-import { NoBoards, Boards, Board, colors } from "@entities/Board";
+import { NoBoards, Boards } from "@entities/Board";
 import useFetchBoards from "@entities/Board/model/service/fetchBoards";
 import useUserStore from "@app/store";
 import AppLoader from "@shared/ui/AppLoader/AppLoader";
