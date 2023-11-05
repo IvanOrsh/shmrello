@@ -17,9 +17,12 @@ const theme: Theme = createTheme({
 
   typography: {
     fontFamily: "Lato, sans-serif",
+    h6: {
+      fontWeight: 700,
+    },
     button: {
       textTransform: "unset",
-      fontWeight: "700",
+      fontWeight: 700,
     },
   },
 
