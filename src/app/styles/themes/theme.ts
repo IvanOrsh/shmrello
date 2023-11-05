@@ -17,6 +17,9 @@ const theme: Theme = createTheme({
 
   typography: {
     fontFamily: "Lato, sans-serif",
+    h5: {
+      fontWeight: 700,
+    },
     h6: {
       fontWeight: 700,
     },
