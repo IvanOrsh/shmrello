@@ -11,6 +11,7 @@ import { FirebaseError } from "firebase/app";
 import ImageEl from "@shared/ui/ImageEl/ImageEl";
 import logoDark from "@shared/assets/shmrello-logo-dark.svg";
 import { auth } from "@app/firebase";
+import useUserStore from "@app/store";
 
 type AuthForm = {
   email: string;
@@ -29,6 +30,8 @@ const AuthPage = () => {
     ? "Don not have an account"
     : "Already have an account?";
   const [form, setForm] = useState(initForm);
+  const { setToaster } = useUserStore();
+
   const onChangeHandler = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -60,7 +63,7 @@ const AuthPage = () => {
         const [_, error] = err.code.split("/");
         if (error) {
           const message = error.split("-").join(" ");
-          console.log(message);
+          setToaster(message);
         }
       }
       setLoading(false);

@@ -29,6 +29,26 @@ const theme: Theme = createTheme({
     },
   },
 
+  components: {
+    MuiSnackbar: {
+      defaultProps: {
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "center",
+        },
+      },
+    },
+
+    MuiSnackbarContent: {
+      styleOverrides: {
+        message: {
+          fontWeight: 700,
+          textTransform: "capitalize",
+        },
+      },
+    },
+  },
+
   shape: {
     borderRadius: 0,
   },

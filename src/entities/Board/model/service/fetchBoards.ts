@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 import { db } from "@app/firebase";
@@ -14,7 +14,8 @@ const useFetchBoards = () => {
   ) => {
     const colRef = collection(db, `users/${currentUser?.uid}/boards`);
     try {
-      const querySnapshot = await getDocs(colRef);
+      const q = query(colRef, orderBy("createdAt", "desc"));
+      const querySnapshot = await getDocs(q);
       const boards = querySnapshot.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,

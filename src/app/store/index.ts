@@ -8,6 +8,7 @@ export type UserQuery = {
   isLoggedIn: boolean;
   boards: Board[];
   areBoardsFetched: boolean;
+  toasterMsg: string;
 };
 
 interface UserQueryStore {
@@ -15,6 +16,7 @@ interface UserQueryStore {
   setLoginStatus: (status: boolean) => void;
   setBoards: (boards: Board[]) => void;
   addBoard: (board: Board) => void;
+  setToaster: (toasterMsg: string) => void;
 }
 
 const useUserStore = create<UserQueryStore>((set) => ({
@@ -23,6 +25,7 @@ const useUserStore = create<UserQueryStore>((set) => ({
     isLoggedIn: false,
     boards: [],
     areBoardsFetched: false,
+    toasterMsg: "",
   },
 
   setLoginStatus: (status) =>
@@ -47,7 +50,15 @@ const useUserStore = create<UserQueryStore>((set) => ({
     set((store) => ({
       userQuery: {
         ...store.userQuery,
-        boards: [...store.userQuery.boards.concat(board)],
+        boards: [board, ...store.userQuery.boards],
+      },
+    })),
+
+  setToaster: (toasterMsg) =>
+    set((store) => ({
+      userQuery: {
+        ...store.userQuery,
+        toasterMsg,
       },
     })),
 }));

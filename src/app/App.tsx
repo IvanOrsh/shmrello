@@ -7,6 +7,7 @@ import { auth } from "./firebase";
 import { AppRouter } from "./providers/router";
 import useUserStore from "./store";
 import theme from "./styles/themes/theme";
+import { SnackbarManager } from "@widgets/SnackbarManager";
 
 function App() {
   const { userQuery, setLoginStatus } = useUserStore();
@@ -16,7 +17,7 @@ function App() {
       setLoginStatus(!!user);
     });
 
-    console.log(userQuery.isLoggedIn, userQuery.loader);
+    console.log(userQuery.isLoggedIn, userQuery.loader, userQuery.boards);
 
     return () => unsub();
   }, [setLoginStatus, userQuery.isLoggedIn, userQuery.loader]);
@@ -28,6 +29,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <SnackbarManager />
       <AppRouter />
     </ThemeProvider>
   );
