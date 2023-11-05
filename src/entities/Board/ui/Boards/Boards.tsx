@@ -1,6 +1,6 @@
 import { Stack, Grid } from "@mui/material";
 import BoardCard from "../BoardCard/BoardCard";
-import { Board } from "../../model/Board";
+import { Board } from "../../model/types/Board";
 
 type BoardsProps = {
   boards: Board[];

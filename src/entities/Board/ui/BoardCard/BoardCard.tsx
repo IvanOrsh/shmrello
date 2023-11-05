@@ -21,7 +21,7 @@ const BoardCard = ({ color, name, createdAt }: BoardCardProps) => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Box width="50%">
+          <Box width="80%">
             <Typography
               whiteSpace="nowrap"
               overflow="hidden"
