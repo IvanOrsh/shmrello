@@ -1,4 +1,4 @@
-import { Grid, Stack, Typography, IconButton } from "@mui/material";
+import { Grid, Stack, Typography, IconButton, Box } from "@mui/material";
 import OpenIcon from "@mui/icons-material/Launch";
 
 type BoardCardProps = {
@@ -9,7 +9,7 @@ type BoardCardProps = {
 
 const BoardCard = ({ color, name, createdAt }: BoardCardProps) => {
   return (
-    <Grid item xs={3}>
+    <Grid item xs={6} md={4} lg={3} xl={2}>
       <Stack
         p={2}
         bgcolor="background.paper"
@@ -21,9 +21,17 @@ const BoardCard = ({ color, name, createdAt }: BoardCardProps) => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Typography fontWeight={400} variant="h6">
-            {name}
-          </Typography>
+          <Box width="50%">
+            <Typography
+              whiteSpace="nowrap"
+              overflow="hidden"
+              textOverflow="ellipsis"
+              fontWeight={400}
+              variant="h6"
+            >
+              {name}
+            </Typography>
+          </Box>
           <IconButton>
             <OpenIcon />
           </IconButton>
