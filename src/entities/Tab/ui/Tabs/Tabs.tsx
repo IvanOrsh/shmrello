@@ -1,4 +1,4 @@
-import { useState, memo, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { Grid, Stack } from "@mui/material";
 
 import Tab from "../Tab/Tab";
@@ -78,6 +78,29 @@ const Tabs = ({ boardData, boardId, handleUpdateLastUpdated }: TabsProps) => {
     handleUpdateLastUpdated();
   };
 
+  const handleRemoveTask = useCallback(
+    async (tab: TabKeys, taskId: string) => {
+      const dClone = structuredClone(tabs);
+
+      const taskIdx = dClone[tab].findIndex((t) => t.id === taskId);
+
+      dClone[tab].splice(taskIdx, 1);
+
+      try {
+        await updateBoardData(boardId, {
+          id: boardId,
+          tabs: dClone,
+        });
+        setTabs(dClone);
+      } catch (err) {
+        console.log(err);
+      }
+
+      handleUpdateLastUpdated();
+    },
+    [boardId, handleUpdateLastUpdated, tabs, updateBoardData]
+  );
+
   return (
     <>
       {!!taskStatus && (
@@ -97,6 +120,7 @@ const Tabs = ({ boardData, boardId, handleUpdateLastUpdated }: TabsProps) => {
               tabKey={tab as TabKeys}
               tasks={tabs[tab as TabKeys]}
               setTaskStatus={handleSetTaskStatus}
+              handleRemoveTask={handleRemoveTask}
             />
           ))}
         </Grid>

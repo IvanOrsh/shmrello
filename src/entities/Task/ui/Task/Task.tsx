@@ -2,11 +2,13 @@ import { Stack, Typography, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 type TaskProps = {
-  id: string;
   text: string;
+  handleRemoveTask: () => Promise<void>;
 };
 
-const Task = ({ id, text }: TaskProps) => {
+const Task = (props: TaskProps) => {
+  const { text, handleRemoveTask } = props;
+
   return (
     <Stack
       direction="row"
@@ -23,7 +25,7 @@ const Task = ({ id, text }: TaskProps) => {
       >
         {text}
       </Typography>
-      <IconButton>
+      <IconButton onClick={handleRemoveTask}>
         <DeleteIcon />
       </IconButton>
     </Stack>

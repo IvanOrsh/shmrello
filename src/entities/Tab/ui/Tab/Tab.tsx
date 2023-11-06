@@ -9,9 +9,11 @@ type TabProps = {
   tabKey: TabKeys;
   setTaskStatus: (status: "" | TabKeys) => void;
   tasks: TaskType[];
+  handleRemoveTask: (tab: TabKeys, taskId: string) => Promise<void>;
 };
 
-const Tab = memo(({ tabKey, setTaskStatus, tasks }: TabProps) => {
+const Tab = memo((props: TabProps) => {
+  const { tabKey, setTaskStatus, tasks, handleRemoveTask } = props;
   return (
     <Grid item xs={4}>
       {/* header */}
@@ -32,7 +34,11 @@ const Tab = memo(({ tabKey, setTaskStatus, tasks }: TabProps) => {
         {/* items */}
         <Stack spacing={2} mt={3}>
           {tasks.map(({ id, text }) => (
-            <Task key={id} id={id} text={text} />
+            <Task
+              key={id}
+              text={text}
+              handleRemoveTask={() => handleRemoveTask(tabKey, id)}
+            />
           ))}
         </Stack>
       </Stack>
