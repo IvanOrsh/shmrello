@@ -26,9 +26,7 @@ const useCreateBoard = () => {
       });
     } catch (err) {
       const error = err as Error;
-      // TODO: showing the msg in toastr
-      setToaster(error.message);
-      console.log(err);
+      setToaster(`Error creating board: ${error.message}`);
       throw err;
     }
   };

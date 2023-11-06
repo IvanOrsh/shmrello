@@ -7,7 +7,7 @@ import { Board } from "../types/Board";
 
 const useFetchBoards = () => {
   const { currentUser } = getAuth();
-  const { setBoards } = useUserStore();
+  const { setBoards, setToaster } = useUserStore();
 
   const fetchBoards = async (
     setLoading?: React.Dispatch<React.SetStateAction<boolean>>
@@ -23,7 +23,8 @@ const useFetchBoards = () => {
       })) as Board[];
       setBoards(boards);
     } catch (err) {
-      console.log(err);
+      const error = err as Error;
+      setToaster(`Error fetching boards: ${error.message}`);
       // throw err;
     } finally {
       if (setLoading) setLoading(false);

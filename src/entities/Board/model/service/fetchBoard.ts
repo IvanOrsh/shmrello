@@ -2,12 +2,11 @@ import { doc, getDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 import { db } from "@app/firebase";
-// import useUserStore from "@app/store";
-// import { Board } from "../types/Board";
+import useUserStore from "@app/store";
 
 const useFetchBoard = () => {
   const { currentUser } = getAuth();
-  // const { setBoards } = useUserStore();
+  const { setToaster } = useUserStore();
 
   const fetchBoard = async (boardId: string) => {
     const docRef = doc(db, `users/${currentUser?.uid}/boardsData/${boardId}`);
@@ -18,8 +17,9 @@ const useFetchBoard = () => {
       }
       return null;
     } catch (err) {
-      // TODO: toastr
-      console.log(err);
+      const error = err as Error;
+      setToaster(`Error fetching board: ${error.message}`);
+      throw err;
     }
   };
 
