@@ -1,3 +1,5 @@
+import type { TaskType } from "@entities/Task";
+
 export type Board = {
   id: string;
   name: string;
@@ -9,8 +11,8 @@ export type BoardData = {
   id: string;
   lastUpdated: string;
   tabs: {
-    completed: string[];
-    inProgress: string[];
-    todos: string[];
+    completed: TaskType[];
+    inProgress: TaskType[];
+    todos: TaskType[];
   };
 };
