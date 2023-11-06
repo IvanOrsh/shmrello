@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import PublicOnlyRoute from "./PublicOnlyRoute";
 import { AuthPage } from "@pages/AuthPage";
@@ -35,6 +35,7 @@ const AppRouter = () => {
             </PrivateOnlyRoute>
           }
         />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>
   );
