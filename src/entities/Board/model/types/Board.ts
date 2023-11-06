@@ -7,6 +7,10 @@ export type Board = {
 
 export type BoardData = {
   id: string;
-  updatedAt: string;
-  tabs: string[];
+  lastUpdated: string;
+  tabs: {
+    completed: string[];
+    inProgress: string[];
+    todos: string[];
+  };
 };
