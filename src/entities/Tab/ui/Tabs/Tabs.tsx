@@ -103,7 +103,7 @@ const Tabs = ({ boardData, boardId, handleUpdateLastUpdated }: TabsProps) => {
 
       handleUpdateLastUpdated();
     },
-    [boardId, handleUpdateLastUpdated, tabs, updateBoardData]
+    [/*boardId, handleUpdateLastUpdated,*/ tabs /*updateBoardData*/]
   );
 
   const handleDnd = async (obj: DropResult) => {
