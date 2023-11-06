@@ -9,12 +9,13 @@ type BoardTopBarProps = {
   name: string;
   color: string;
   lastUpdated: string;
+  handleDeleteBoard: () => Promise<void>;
 };
 
 const BoardTopBar = memo((props: BoardTopBarProps) => {
   const navigate = useNavigate();
 
-  const { name, color, lastUpdated: createdAt } = props;
+  const { name, color, lastUpdated: createdAt, handleDeleteBoard } = props;
 
   return (
     <AppBar
@@ -38,7 +39,7 @@ const BoardTopBar = memo((props: BoardTopBarProps) => {
 
         <Stack direction="row" alignItems="center" spacing={2}>
           <Typography variant="body2">Last updated: {createdAt}</Typography>
-          <IconButton>
+          <IconButton onClick={handleDeleteBoard}>
             <DeleteIcon />
           </IconButton>
         </Stack>

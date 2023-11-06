@@ -8,6 +8,7 @@ import { useFetchBoard } from "@entities/Board";
 import type { BoardData } from "@entities/Board";
 import AppLoader from "@shared/ui/AppLoader/AppLoader";
 import { BoardNotReady } from "@entities/Board";
+import { useDeleteBoard } from "@features/deleteBoard";
 
 const BoardPage = () => {
   const navigate = useNavigate();
@@ -18,6 +19,8 @@ const BoardPage = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<BoardData | null>(null);
   const [lastUpdated, setLastUpdated] = useState("");
+
+  const deleteBoard = useDeleteBoard();
 
   const {
     userQuery: { boards, areBoardsFetched },
@@ -52,6 +55,20 @@ const BoardPage = () => {
     }
   };
 
+  const handleDeleteBoard = useCallback(async () => {
+    if (!window.confirm("Do you want to delete this board?")) {
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await deleteBoard(boardId!);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  }, [boardId, deleteBoard]);
+
   useEffect(() => {
     if (!areBoardsFetched || !board) {
       navigate(-1);
@@ -72,6 +89,7 @@ const BoardPage = () => {
         name={board?.name || "Default Board"}
         color={board?.color || "#fff"}
         lastUpdated={lastUpdated || "just now"}
+        handleDeleteBoard={handleDeleteBoard}
       />
 
       {/* TODO: more research needed */}
