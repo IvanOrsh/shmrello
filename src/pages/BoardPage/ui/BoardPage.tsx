@@ -25,6 +25,7 @@ const BoardPage = () => {
     () => boards.find((b) => b.id === boardId),
     [boardId, boards]
   );
+  const boardData = useMemo(() => data, [data]);
 
   const handleFetchBoard = async () => {
     try {
@@ -52,8 +53,6 @@ const BoardPage = () => {
     }
   }, []);
 
-  // console.log(data);
-
   if (!board) return null;
 
   if (loading) return <AppLoader />;
@@ -66,7 +65,8 @@ const BoardPage = () => {
         lastUpdated={data?.lastUpdated || "just now"}
       />
 
-      <Tabs />
+      {/* TODO: more research needed */}
+      <Tabs boardData={boardData!} />
     </>
   );
 };

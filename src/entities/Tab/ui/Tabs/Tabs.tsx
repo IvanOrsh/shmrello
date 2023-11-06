@@ -4,24 +4,34 @@ import Tab from "../Tab/Tab";
 import { AddTaskModal } from "@features/addTask";
 import { Tab as TabType } from "../../model/types/Tab";
 import { useState } from "react";
+import { BoardData } from "@entities/Board";
 
-const tabs: TabType[] = [
-  {
-    id: "1",
-    status: "todo",
-  },
-  {
-    id: "2",
-    status: "in progress",
-  },
-  {
-    id: "3",
-    status: "completed",
-  },
-];
+type TabsProps = {
+  boardData: BoardData;
+};
 
-const Tabs = () => {
+const Tabs = ({ boardData }: TabsProps) => {
   const [taskStatus, setTaskStatus] = useState("");
+
+  const { tabs: boardDataTabs } = boardData;
+
+  const tabs: TabType[] = [
+    {
+      id: "1",
+      status: "todo",
+      tasks: [...boardDataTabs.todos],
+    },
+    {
+      id: "2",
+      status: "in progress",
+      tasks: [...boardDataTabs.inProgress],
+    },
+    {
+      id: "3",
+      status: "completed",
+      tasks: [...boardDataTabs.completed],
+    },
+  ];
 
   return (
     <>

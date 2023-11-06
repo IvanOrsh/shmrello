@@ -2,6 +2,7 @@ import { Grid, Stack, Typography, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/AddCircleOutline";
 
 import { Tab as TabType } from "../../model/types/Tab";
+import { Task } from "@entities/Task";
 
 type TabProps = {
   tab: TabType;
@@ -27,7 +28,11 @@ const Tab = ({ tab, setTaskStatus }: TabProps) => {
         </Stack>
 
         {/* items */}
-        <Stack></Stack>
+        <Stack spacing={2} mt={3}>
+          {tab.tasks.map(({ id, text }) => (
+            <Task key={id} id={id} text={text} />
+          ))}
+        </Stack>
       </Stack>
     </Grid>
   );
