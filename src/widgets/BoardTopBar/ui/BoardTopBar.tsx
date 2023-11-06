@@ -1,8 +1,12 @@
 import { AppBar, Toolbar, Stack, Typography, IconButton } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+
 import BackIcon from "@mui/icons-material/ArrowBack";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const BoardTopBar = () => {
+  const navigate = useNavigate();
+
   return (
     <AppBar
       position="static"
@@ -17,7 +21,7 @@ const BoardTopBar = () => {
         }}
       >
         <Stack direction="row" alignItems="center" spacing={1}>
-          <IconButton>
+          <IconButton onClick={() => navigate(-1)}>
             <BackIcon />
           </IconButton>
           <Typography variant="h6">Board name</Typography>

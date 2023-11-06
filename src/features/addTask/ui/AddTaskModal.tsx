@@ -11,12 +11,12 @@ import ModalHeader from "@shared/ui/ModalHeader/ModalHeader";
 
 type AddTaskModalProps = {
   taskStatus: string;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpen: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const AddTaskModal = ({ taskStatus, setOpen }: AddTaskModalProps) => {
   const handleClose = () => {
-    setOpen(false);
+    setOpen("");
   };
 
   return (

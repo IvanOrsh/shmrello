@@ -21,8 +21,8 @@ const Tab = ({ tab, setTaskStatus }: TabProps) => {
           <Typography fontWeight={400} variant="h6" textTransform="capitalize">
             {tab.status}
           </Typography>
-          <IconButton>
-            <AddIcon onClick={setTaskStatus} />
+          <IconButton onClick={setTaskStatus}>
+            <AddIcon />
           </IconButton>
         </Stack>
 
