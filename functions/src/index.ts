@@ -7,7 +7,10 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-import { onDocumentCreated } from "firebase-functions/v2/firestore";
+import {
+  onDocumentCreated,
+  onDocumentDeleted,
+} from "firebase-functions/v2/firestore";
 import { initializeApp } from "firebase-admin/app";
 import { getFirestore, FieldValue } from "firebase-admin/firestore";
 
@@ -27,5 +30,15 @@ export const createBoardData = onDocumentCreated(
       },
       lastUpdated: FieldValue.serverTimestamp(),
     });
+  }
+);
+
+export const deleteBoardData = onDocumentDeleted(
+  "users/{uid}/boards/{boardId}",
+  async (event) => {
+    const { uid, boardId } = event.params;
+    const firestore = getFirestore();
+
+    return await firestore.doc(`users/${uid}/boardsData/${boardId}`).delete();
   }
 );
