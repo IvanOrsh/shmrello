@@ -1,4 +1,4 @@
 export type Tab = {
   id: string;
-  type: "todo" | "in progress" | "completed";
+  status: "todo" | "in progress" | "completed";
 };

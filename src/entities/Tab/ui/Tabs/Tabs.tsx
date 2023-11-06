@@ -1,32 +1,43 @@
 import { Grid, Stack } from "@mui/material";
 
 import Tab from "../Tab/Tab";
+import { AddTaskModal } from "@features/addTask";
 import { Tab as TabType } from "../../model/types/Tab";
+import { useState } from "react";
 
 const tabs: TabType[] = [
   {
     id: "1",
-    type: "todo",
+    status: "todo",
   },
   {
     id: "2",
-    type: "in progress",
+    status: "in progress",
   },
   {
     id: "3",
-    type: "completed",
+    status: "completed",
   },
 ];
 
 const Tabs = () => {
+  const [taskStatus, setTaskStatus] = useState("");
+
   return (
-    <Stack px={3} mt={5}>
-      <Grid container spacing={3}>
-        {tabs.map((tab) => (
-          <Tab key={tab.id} tab={tab} />
-        ))}
-      </Grid>
-    </Stack>
+    <>
+      <AddTaskModal taskStatus={taskStatus} setOpen={() => setTaskStatus("")} />
+      <Stack px={3} mt={5}>
+        <Grid container spacing={3}>
+          {tabs.map((tab) => (
+            <Tab
+              key={tab.id}
+              tab={tab}
+              setTaskStatus={() => setTaskStatus(tab.status)}
+            />
+          ))}
+        </Grid>
+      </Stack>
+    </>
   );
 };
 

@@ -5,9 +5,10 @@ import { Tab as TabType } from "../../model/types/Tab";
 
 type TabProps = {
   tab: TabType;
+  setTaskStatus: () => void;
 };
 
-const Tab = ({ tab }: TabProps) => {
+const Tab = ({ tab, setTaskStatus }: TabProps) => {
   return (
     <Grid item xs={4}>
       {/* header */}
@@ -18,10 +19,10 @@ const Tab = ({ tab }: TabProps) => {
           justifyContent="space-between"
         >
           <Typography fontWeight={400} variant="h6" textTransform="capitalize">
-            {tab.type}
+            {tab.status}
           </Typography>
           <IconButton>
-            <AddIcon />
+            <AddIcon onClick={setTaskStatus} />
           </IconButton>
         </Stack>
 
