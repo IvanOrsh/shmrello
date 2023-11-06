@@ -19,7 +19,7 @@ const useFetchBoards = () => {
       const boards = querySnapshot.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
-        createdAt: doc.data().createdAt.toDate().toLocaleDateString(),
+        createdAt: doc.data().createdAt.toDate().toLocaleString("en-US"),
       })) as Board[];
       setBoards(boards);
     } catch (err) {
