@@ -6,6 +6,7 @@ import { TabKeys, Tab as TabType } from "../../model/types/Tab";
 import { AddTaskModal } from "@features/addTask";
 import { BoardData } from "@entities/Board";
 import { useUpdateBoardData } from "@entities/Board";
+import useUserStore from "@app/store";
 
 type StatusMapType = {
   [KEY in TabKeys]: string;
@@ -26,6 +27,8 @@ type TabsProps = {
 const Tabs = ({ boardData, boardId, handleUpdateLastUpdated }: TabsProps) => {
   const { tabs: boardDataTabs } = boardData;
 
+  const { setToaster } = useUserStore();
+
   const updateBoardData = useUpdateBoardData();
 
   const [loading, setLoading] = useState(false);
@@ -41,11 +44,12 @@ const Tabs = ({ boardData, boardId, handleUpdateLastUpdated }: TabsProps) => {
   }, []);
 
   const handleAddTask = async (text: string) => {
-    const dClone = structuredClone(tabs);
-    if (!text || !taskStatus) {
-      setTaskStatus("");
+    if (!text.trim() || !taskStatus) {
+      setToaster("Task text cannot be empty");
       return;
     }
+
+    const dClone = structuredClone(tabs);
     // update local state
 
     const newTask = {

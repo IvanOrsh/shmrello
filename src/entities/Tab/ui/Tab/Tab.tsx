@@ -12,7 +12,6 @@ type TabProps = {
 };
 
 const Tab = memo(({ tabKey, setTaskStatus, tasks }: TabProps) => {
-  console.log(tasks);
   return (
     <Grid item xs={4}>
       {/* header */}

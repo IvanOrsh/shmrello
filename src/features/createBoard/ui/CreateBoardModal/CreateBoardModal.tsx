@@ -11,6 +11,7 @@ import {
 import { colors } from "@entities/Board";
 import ModalHeader from "@shared/ui/ModalHeader/ModalHeader";
 import useCreateBoard from "../../model/service/createBoard";
+import useUserStore from "@app/store";
 
 type CreateBoardModalProps = {
   open: boolean;
@@ -19,6 +20,8 @@ type CreateBoardModalProps = {
 
 const CreateBoardModal = ({ open, setOpen }: CreateBoardModalProps) => {
   const createBoard = useCreateBoard();
+
+  const { setToaster } = useUserStore();
 
   const [name, setName] = useState("");
   const [selectedColor, setSelectedColor] = useState(0);
@@ -29,6 +32,10 @@ const CreateBoardModal = ({ open, setOpen }: CreateBoardModalProps) => {
   };
 
   const handleCreate = async () => {
+    if (!name.trim()) {
+      setToaster("Board name cannot be empty");
+      return;
+    }
     try {
       setLoading(true);
       await createBoard({ name, color: colors[selectedColor] });
