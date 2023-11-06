@@ -45,6 +45,17 @@ const Tabs = ({ boardData, boardId, handleUpdateLastUpdated }: TabsProps) => {
     setTaskStatus(status);
   }, []);
 
+  const handleUpdateBoardData = async (dClone: TabType) => {
+    setLoading(true);
+    await updateBoardData(boardId, {
+      id: boardId,
+      tabs: dClone,
+    });
+    setTabs(dClone);
+    handleUpdateLastUpdated();
+    setToaster("Board updated");
+  };
+
   const handleAddTask = async (text: string) => {
     if (!text.trim() || !taskStatus) {
       setToaster("Task text cannot be empty");
@@ -63,12 +74,7 @@ const Tabs = ({ boardData, boardId, handleUpdateLastUpdated }: TabsProps) => {
 
     // and then update server state
     try {
-      setLoading(true);
-      await updateBoardData(boardId, {
-        id: boardId,
-        tabs: dClone,
-      });
-      setTabs(dClone);
+      await handleUpdateBoardData(dClone);
     } catch (err) {
       // TODO: toastr
       console.log(err);
@@ -77,7 +83,6 @@ const Tabs = ({ boardData, boardId, handleUpdateLastUpdated }: TabsProps) => {
     }
 
     setTaskStatus("");
-    handleUpdateLastUpdated();
   };
 
   const handleRemoveTask = useCallback(
@@ -89,19 +94,12 @@ const Tabs = ({ boardData, boardId, handleUpdateLastUpdated }: TabsProps) => {
       dClone[tab].splice(taskIdx, 1);
 
       try {
-        setLoading(true);
-        await updateBoardData(boardId, {
-          id: boardId,
-          tabs: dClone,
-        });
-        setTabs(dClone);
+        await handleUpdateBoardData(dClone);
       } catch (err) {
         console.log(err);
       } finally {
         setLoading(false);
       }
-
-      handleUpdateLastUpdated();
     },
     [/*boardId, handleUpdateLastUpdated,*/ tabs /*updateBoardData*/]
   );
@@ -138,12 +136,7 @@ const Tabs = ({ boardData, boardId, handleUpdateLastUpdated }: TabsProps) => {
 
     // update server state
     try {
-      setLoading(true);
-      await updateBoardData(boardId, {
-        id: boardId,
-        tabs: dClone,
-      });
-      setTabs(dClone);
+      await handleUpdateBoardData(dClone);
     } catch (err) {
       // TODO: toastr
       console.log(err);
