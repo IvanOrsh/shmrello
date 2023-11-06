@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import useUserStore from "@app/store";
@@ -16,6 +16,7 @@ const BoardPage = () => {
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<BoardData | null>(null);
+  const [lastUpdated, setLastUpdated] = useState("");
 
   const {
     userQuery: { boards, areBoardsFetched },
@@ -27,6 +28,10 @@ const BoardPage = () => {
   );
   const boardData = useMemo(() => data, [data]);
 
+  const handleUpdateLastUpdated = useCallback(() => {
+    setLastUpdated(new Date().toLocaleString("en-US"));
+  }, []);
+
   const handleFetchBoard = async () => {
     try {
       const boardData = await fetchBoard(boardId!);
@@ -36,6 +41,7 @@ const BoardPage = () => {
           tabs: boardData.tabs,
           lastUpdated: boardData.lastUpdated.toDate().toLocaleString("en-US"),
         });
+        setLastUpdated(boardData.lastUpdated.toDate().toLocaleString("en-US"));
       }
     } catch (err) {
       // TODO: !
@@ -62,11 +68,15 @@ const BoardPage = () => {
       <BoardTopBar
         name={board?.name || "Default Board"}
         color={board?.color || "#fff"}
-        lastUpdated={data?.lastUpdated || "just now"}
+        lastUpdated={lastUpdated || "just now"}
       />
 
       {/* TODO: more research needed */}
-      <Tabs boardData={boardData!} boardId={boardId!} />
+      <Tabs
+        boardData={boardData!}
+        boardId={boardId!}
+        handleUpdateLastUpdated={handleUpdateLastUpdated}
+      />
     </>
   );
 };

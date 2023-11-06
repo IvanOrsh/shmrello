@@ -11,13 +11,14 @@ import {
 import ModalHeader from "@shared/ui/ModalHeader/ModalHeader";
 
 type AddTaskModalProps = {
+  loading: boolean;
   taskStatus: string;
   setOpen: React.Dispatch<React.SetStateAction<string>>;
   handleAddTask: (text: string) => void;
 };
 
 const AddTaskModal = (props: AddTaskModalProps) => {
-  const { taskStatus, setOpen, handleAddTask } = props;
+  const { loading, taskStatus, setOpen, handleAddTask } = props;
   const [text, setText] = useState("");
 
   const handleOnChange = (
@@ -52,6 +53,7 @@ const AddTaskModal = (props: AddTaskModalProps) => {
             handleAddTask(text);
           }}
           variant="contained"
+          disabled={loading}
         >
           Add Task
         </Button>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Grid, Stack } from "@mui/material";
 
 import Tab from "../Tab/Tab";
@@ -10,13 +10,15 @@ import { useUpdateBoardData } from "@entities/Board";
 type TabsProps = {
   boardData: BoardData;
   boardId: string;
+  handleUpdateLastUpdated: () => void;
 };
 
-const Tabs = ({ boardData, boardId }: TabsProps) => {
+const Tabs = ({ boardData, boardId, handleUpdateLastUpdated }: TabsProps) => {
   const { tabs: boardDataTabs } = boardData;
 
   const updateBoardData = useUpdateBoardData();
 
+  const [loading, setLoading] = useState(false);
   const [taskStatus, setTaskStatus] = useState<TabKeys | "">("");
   const [tabs, setTabs] = useState<TabType>({
     todos: [...boardDataTabs.todos],
@@ -41,6 +43,7 @@ const Tabs = ({ boardData, boardId }: TabsProps) => {
 
     // and then update server state
     try {
+      setLoading(true);
       await updateBoardData(boardId, {
         id: boardId,
         tabs: dClone,
@@ -49,9 +52,12 @@ const Tabs = ({ boardData, boardId }: TabsProps) => {
     } catch (err) {
       // TODO: toastr
       console.log(err);
+    } finally {
+      setLoading(false);
     }
 
     setTaskStatus("");
+    handleUpdateLastUpdated();
   };
 
   return (
@@ -60,6 +66,7 @@ const Tabs = ({ boardData, boardId }: TabsProps) => {
         handleAddTask={handleAddTask}
         taskStatus={taskStatus}
         setOpen={() => setTaskStatus("")}
+        loading={loading}
       />
 
       <Stack px={3} mt={5}>
