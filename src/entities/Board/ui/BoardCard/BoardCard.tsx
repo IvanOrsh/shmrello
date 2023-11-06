@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Grid, Stack, Typography, IconButton, Box } from "@mui/material";
 import OpenIcon from "@mui/icons-material/Launch";
@@ -9,7 +10,7 @@ type BoardCardProps = {
   createdAt: string;
 };
 
-const BoardCard = ({ id, color, name, createdAt }: BoardCardProps) => {
+const BoardCard = memo(({ id, color, name, createdAt }: BoardCardProps) => {
   const navigate = useNavigate();
 
   return (
@@ -45,6 +46,6 @@ const BoardCard = ({ id, color, name, createdAt }: BoardCardProps) => {
       </Stack>
     </Grid>
   );
-};
+});
 
 export default BoardCard;

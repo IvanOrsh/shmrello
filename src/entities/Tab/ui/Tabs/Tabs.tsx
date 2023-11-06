@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo, useCallback } from "react";
 import { Grid, Stack } from "@mui/material";
 
 import Tab from "../Tab/Tab";
@@ -6,6 +6,16 @@ import { TabKeys, Tab as TabType } from "../../model/types/Tab";
 import { AddTaskModal } from "@features/addTask";
 import { BoardData } from "@entities/Board";
 import { useUpdateBoardData } from "@entities/Board";
+
+type StatusMapType = {
+  [KEY in TabKeys]: string;
+};
+
+const statusMap: StatusMapType = {
+  todos: "Todos",
+  inProgress: "In Progress",
+  completed: "Completed",
+};
 
 type TabsProps = {
   boardData: BoardData;
@@ -25,6 +35,10 @@ const Tabs = ({ boardData, boardId, handleUpdateLastUpdated }: TabsProps) => {
     inProgress: [...boardDataTabs.inProgress],
     completed: [...boardDataTabs.completed],
   });
+
+  const handleSetTaskStatus = useCallback((status: TabKeys | "") => {
+    setTaskStatus(status);
+  }, []);
 
   const handleAddTask = async (text: string) => {
     const dClone = structuredClone(tabs);
@@ -62,21 +76,23 @@ const Tabs = ({ boardData, boardId, handleUpdateLastUpdated }: TabsProps) => {
 
   return (
     <>
-      <AddTaskModal
-        handleAddTask={handleAddTask}
-        taskStatus={taskStatus}
-        setOpen={() => setTaskStatus("")}
-        loading={loading}
-      />
+      {!!taskStatus && (
+        <AddTaskModal
+          handleAddTask={handleAddTask}
+          taskStatus={taskStatus}
+          setOpen={() => setTaskStatus("")}
+          loading={loading}
+        />
+      )}
 
       <Stack px={3} mt={5}>
         <Grid container spacing={3}>
-          {Object.keys(tabs).map((tab) => (
+          {Object.keys(statusMap).map((tab) => (
             <Tab
               key={tab}
-              tabKey={tab}
+              tabKey={tab as TabKeys}
               tasks={tabs[tab as TabKeys]}
-              setTaskStatus={() => setTaskStatus(tab as TabKeys)}
+              setTaskStatus={handleSetTaskStatus}
             />
           ))}
         </Grid>

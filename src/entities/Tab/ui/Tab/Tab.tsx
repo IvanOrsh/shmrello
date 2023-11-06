@@ -1,15 +1,18 @@
+import { memo } from "react";
 import { Grid, Stack, Typography, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/AddCircleOutline";
 
 import { Task, TaskType } from "@entities/Task";
+import { TabKeys } from "@entities/Tab/model/types/Tab";
 
 type TabProps = {
-  tabKey: string;
-  setTaskStatus: () => void;
+  tabKey: TabKeys;
+  setTaskStatus: (status: "" | TabKeys) => void;
   tasks: TaskType[];
 };
 
-const Tab = ({ tabKey, setTaskStatus, tasks }: TabProps) => {
+const Tab = memo(({ tabKey, setTaskStatus, tasks }: TabProps) => {
+  console.log(tasks);
   return (
     <Grid item xs={4}>
       {/* header */}
@@ -22,7 +25,7 @@ const Tab = ({ tabKey, setTaskStatus, tasks }: TabProps) => {
           <Typography fontWeight={400} variant="h6" textTransform="capitalize">
             {tabKey}
           </Typography>
-          <IconButton onClick={setTaskStatus}>
+          <IconButton onClick={() => setTaskStatus(tabKey)}>
             <AddIcon />
           </IconButton>
         </Stack>
@@ -36,6 +39,6 @@ const Tab = ({ tabKey, setTaskStatus, tasks }: TabProps) => {
       </Stack>
     </Grid>
   );
-};
+});
 
 export default Tab;

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { AppBar, Toolbar, Stack, Typography, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +11,7 @@ type BoardTopBarProps = {
   lastUpdated: string;
 };
 
-const BoardTopBar = (props: BoardTopBarProps) => {
+const BoardTopBar = memo((props: BoardTopBarProps) => {
   const navigate = useNavigate();
 
   const { name, color, lastUpdated: createdAt } = props;
@@ -44,6 +45,6 @@ const BoardTopBar = (props: BoardTopBarProps) => {
       </Toolbar>
     </AppBar>
   );
-};
+});
 
 export default BoardTopBar;
