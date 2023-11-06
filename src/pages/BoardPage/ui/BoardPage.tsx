@@ -7,6 +7,7 @@ import { BoardTopBar } from "@widgets/BoardTopBar";
 import { useFetchBoard } from "@entities/Board";
 import type { BoardData } from "@entities/Board";
 import AppLoader from "@shared/ui/AppLoader/AppLoader";
+import { BoardNotReady } from "@entities/Board";
 
 const BoardPage = () => {
   const navigate = useNavigate();
@@ -62,6 +63,8 @@ const BoardPage = () => {
   if (!board) return null;
 
   if (loading) return <AppLoader />;
+
+  if (!data) return <BoardNotReady />;
 
   return (
     <>
