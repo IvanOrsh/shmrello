@@ -22,7 +22,7 @@ const useCreateBoard = () => {
         id: docRef.id,
         name,
         color,
-        createdAt: new Date().toLocaleDateString(),
+        createdAt: new Date().toLocaleString("en-US"),
       });
     } catch (err) {
       const error = err as Error;
