@@ -66,7 +66,7 @@ const BoardPage = () => {
       />
 
       {/* TODO: more research needed */}
-      <Tabs boardData={boardData!} />
+      <Tabs boardData={boardData!} boardId={boardId!} />
     </>
   );
 };

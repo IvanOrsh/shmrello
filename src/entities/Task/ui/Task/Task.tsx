@@ -1,4 +1,4 @@
-import { Stack, Typography, IconButton, Icon } from "@mui/material";
+import { Stack, Typography, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 type TaskProps = {

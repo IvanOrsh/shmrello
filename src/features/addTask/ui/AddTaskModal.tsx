@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Dialog,
   Stack,
@@ -12,10 +13,21 @@ import ModalHeader from "@shared/ui/ModalHeader/ModalHeader";
 type AddTaskModalProps = {
   taskStatus: string;
   setOpen: React.Dispatch<React.SetStateAction<string>>;
+  handleAddTask: (text: string) => void;
 };
 
-const AddTaskModal = ({ taskStatus, setOpen }: AddTaskModalProps) => {
+const AddTaskModal = (props: AddTaskModalProps) => {
+  const { taskStatus, setOpen, handleAddTask } = props;
+  const [text, setText] = useState("");
+
+  const handleOnChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setText(e.target.value);
+  };
+
   const handleClose = () => {
+    setText("");
     setOpen("");
   };
 
@@ -28,9 +40,21 @@ const AddTaskModal = ({ taskStatus, setOpen }: AddTaskModalProps) => {
             <Typography>Status: </Typography>
             <Chip label={taskStatus} size="small" />
           </Stack>
-          <OutlinedInput placeholder="Task" />
+          <OutlinedInput
+            value={text}
+            onChange={handleOnChange}
+            placeholder="Task"
+          />
         </Stack>
-        <Button variant="contained">Add Task</Button>
+        <Button
+          onClick={() => {
+            setText("");
+            handleAddTask(text);
+          }}
+          variant="contained"
+        >
+          Add Task
+        </Button>
       </Stack>
     </Dialog>
   );

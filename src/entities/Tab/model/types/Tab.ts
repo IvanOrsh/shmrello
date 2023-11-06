@@ -1,7 +1,7 @@
 import type { TaskType } from "@entities/Task";
 
+export type TabKeys = "todos" | "inProgress" | "completed";
+
 export type Tab = {
-  id: string;
-  status: "todo" | "in progress" | "completed";
-  tasks: TaskType[];
+  [KEY in TabKeys]: TaskType[];
 };
