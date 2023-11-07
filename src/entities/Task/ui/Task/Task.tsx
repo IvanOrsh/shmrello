@@ -8,7 +8,7 @@ type TaskProps = {
   index: number;
   text: string;
   handleRemoveTask: () => Promise<void>;
-  handleOpenShiftTaskModal: () => void;
+  handleOpenShiftTaskModal?: () => void;
 };
 
 const Task = memo((props: TaskProps) => {

@@ -1,5 +1,12 @@
 import { memo } from "react";
-import { Grid, Stack, Typography, IconButton } from "@mui/material";
+import {
+  Grid,
+  Stack,
+  Typography,
+  IconButton,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/AddCircleOutline";
 import { Droppable } from "@hello-pangea/dnd";
 
@@ -26,6 +33,10 @@ const Tab = memo((props: TabProps) => {
     handleRemoveTask,
     handleOpenShiftTaskModal,
   } = props;
+
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.only("xs"));
+
   return (
     <Droppable droppableId={tabKey}>
       {(provided) => (
@@ -59,8 +70,10 @@ const Tab = memo((props: TabProps) => {
             <Stack spacing={2} mt={3}>
               {tasks.map((task, idx) => (
                 <Task
-                  handleOpenShiftTaskModal={() =>
-                    handleOpenShiftTaskModal(task, idx, tabKey)
+                  handleOpenShiftTaskModal={
+                    isXs
+                      ? () => handleOpenShiftTaskModal(task, idx, tabKey)
+                      : undefined
                   }
                   key={task.id}
                   id={task.id}
