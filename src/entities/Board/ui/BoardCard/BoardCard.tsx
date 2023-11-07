@@ -12,7 +12,7 @@ type BoardCardProps = {
 };
 
 const BoardCard = memo(
-  ({ id, boardsDataId, color, name, createdAt }: BoardCardProps) => {
+  ({ boardsDataId, color, name, createdAt }: BoardCardProps) => {
     const navigate = useNavigate();
 
     return (
