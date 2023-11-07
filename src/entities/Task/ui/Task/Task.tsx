@@ -8,10 +8,11 @@ type TaskProps = {
   index: number;
   text: string;
   handleRemoveTask: () => Promise<void>;
+  handleOpenShiftTaskModal: () => void;
 };
 
 const Task = memo((props: TaskProps) => {
-  const { id, index, text, handleRemoveTask } = props;
+  const { id, index, text, handleRemoveTask, handleOpenShiftTaskModal } = props;
 
   return (
     <Draggable draggableId={id} index={index}>
@@ -31,6 +32,7 @@ const Task = memo((props: TaskProps) => {
             border="1px solid"
             borderColor="#777980"
             bgcolor="#45474e"
+            onClick={handleOpenShiftTaskModal}
           >
             {text}
           </Typography>

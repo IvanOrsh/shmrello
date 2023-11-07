@@ -11,10 +11,21 @@ type TabProps = {
   setTaskStatus: (status: "" | TabKeys) => void;
   tasks: TaskType[];
   handleRemoveTask: (tab: TabKeys, taskId: string) => Promise<void>;
+  handleOpenShiftTaskModal: (
+    task: TaskType,
+    index: number,
+    status: TabKeys
+  ) => void;
 };
 
 const Tab = memo((props: TabProps) => {
-  const { tabKey, setTaskStatus, tasks, handleRemoveTask } = props;
+  const {
+    tabKey,
+    setTaskStatus,
+    tasks,
+    handleRemoveTask,
+    handleOpenShiftTaskModal,
+  } = props;
   return (
     <Droppable droppableId={tabKey}>
       {(provided) => (
@@ -46,13 +57,16 @@ const Tab = memo((props: TabProps) => {
 
             {/* items */}
             <Stack spacing={2} mt={3}>
-              {tasks.map(({ id, text }, idx) => (
+              {tasks.map((task, idx) => (
                 <Task
-                  key={id}
-                  id={id}
+                  handleOpenShiftTaskModal={() =>
+                    handleOpenShiftTaskModal(task, idx, tabKey)
+                  }
+                  key={task.id}
+                  id={task.id}
                   index={idx}
-                  text={text}
-                  handleRemoveTask={() => handleRemoveTask(tabKey, id)}
+                  text={task.text}
+                  handleRemoveTask={() => handleRemoveTask(tabKey, task.id)}
                 />
               ))}
             </Stack>

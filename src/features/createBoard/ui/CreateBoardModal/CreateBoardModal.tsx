@@ -32,19 +32,23 @@ const CreateBoardModal = ({ open, setOpen }: CreateBoardModalProps) => {
   };
 
   const handleCreate = async () => {
-    if (!name.trim()) {
+    const tName = name.trim();
+
+    if (!tName) {
       setToaster("Board name cannot be empty");
       return;
     }
 
-    if (name.length > 20) {
-      setToaster("Board name cannot be more than 20 chars.");
+    if (!/^[a-zA-Z0-9\s]{1,20}$/.test(name)) {
+      setToaster(
+        "Board name cannot contain special characters and should not be more than 20 chards"
+      );
       return;
     }
 
     try {
       setLoading(true);
-      await createBoard({ name, color: colors[selectedColor] });
+      await createBoard({ name: tName, color: colors[selectedColor] });
       handleClose();
     } catch (err) {
       console.log(err);
