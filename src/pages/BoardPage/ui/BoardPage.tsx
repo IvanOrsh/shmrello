@@ -5,9 +5,9 @@ import useUserStore from "@app/store";
 import { Tabs } from "@entities/Tab";
 import {
   BoardTopBar,
-  useFetchBoard,
   BoardData,
   BoardNotReady,
+  useFetchBoard,
 } from "@entities/Board";
 import AppLoader from "@shared/ui/AppLoader/AppLoader";
 import { useDeleteBoard } from "@features/deleteBoard";

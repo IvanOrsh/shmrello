@@ -34,7 +34,16 @@ const BoardTopBar = memo((props: BoardTopBarProps) => {
           <IconButton onClick={() => navigate(-1)}>
             <BackIcon />
           </IconButton>
-          <Typography variant="h6">{name}</Typography>
+          <Typography
+            width="220px"
+            variant="h6"
+            whiteSpace="nowrap"
+            overflow="hidden"
+            textOverflow="ellipsis"
+            fontWeight={400}
+          >
+            {name}
+          </Typography>
         </Stack>
 
         <Stack direction="row" alignItems="center" spacing={2}>

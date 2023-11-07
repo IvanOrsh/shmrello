@@ -26,7 +26,7 @@ const BoardCard = memo(({ id, color, name, createdAt }: BoardCardProps) => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Box width="80%">
+          <Box width="60%">
             <Typography
               whiteSpace="nowrap"
               overflow="hidden"
