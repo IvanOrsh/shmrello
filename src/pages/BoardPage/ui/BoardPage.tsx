@@ -3,11 +3,13 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import useUserStore from "@app/store";
 import { Tabs } from "@entities/Tab";
-import { BoardTopBar } from "@widgets/BoardTopBar";
-import { useFetchBoard } from "@entities/Board";
-import type { BoardData } from "@entities/Board";
+import {
+  BoardTopBar,
+  useFetchBoard,
+  BoardData,
+  BoardNotReady,
+} from "@entities/Board";
 import AppLoader from "@shared/ui/AppLoader/AppLoader";
-import { BoardNotReady } from "@entities/Board";
 import { useDeleteBoard } from "@features/deleteBoard";
 
 const BoardPage = () => {
