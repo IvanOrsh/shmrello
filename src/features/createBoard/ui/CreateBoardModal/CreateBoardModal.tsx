@@ -36,6 +36,12 @@ const CreateBoardModal = ({ open, setOpen }: CreateBoardModalProps) => {
       setToaster("Board name cannot be empty");
       return;
     }
+
+    if (name.length > 20) {
+      setToaster("Board name cannot be more than 20 chars.");
+      return;
+    }
+
     try {
       setLoading(true);
       await createBoard({ name, color: colors[selectedColor] });

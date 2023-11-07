@@ -18,7 +18,13 @@ const Tab = memo((props: TabProps) => {
   return (
     <Droppable droppableId={tabKey}>
       {(provided) => (
-        <Grid {...provided.droppableProps} ref={provided.innerRef} item xs={4}>
+        <Grid
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+          item
+          sm={4}
+          xs={12}
+        >
           {/* header */}
           <Stack p={2} bgcolor="background.paper">
             <Stack

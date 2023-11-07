@@ -38,7 +38,15 @@ const BoardTopBar = memo((props: BoardTopBarProps) => {
         </Stack>
 
         <Stack direction="row" alignItems="center" spacing={2}>
-          <Typography variant="body2">Last updated: {createdAt}</Typography>
+          <Typography
+            display={{
+              xs: "none",
+              sm: "block",
+            }}
+            variant="body2"
+          >
+            Last updated: {createdAt}
+          </Typography>
           <IconButton onClick={handleDeleteBoard}>
             <DeleteIcon />
           </IconButton>

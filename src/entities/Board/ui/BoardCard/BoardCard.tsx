@@ -14,7 +14,7 @@ const BoardCard = memo(({ id, color, name, createdAt }: BoardCardProps) => {
   const navigate = useNavigate();
 
   return (
-    <Grid item xs={6} md={4} lg={3} xl={2}>
+    <Grid item xs={12} md={4} lg={3} xl={2}>
       <Stack
         p={2}
         bgcolor="background.paper"
