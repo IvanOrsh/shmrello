@@ -37,12 +37,15 @@ const BoardsPage = () => {
         <NoBoards />
       ) : (
         <Boards
-          boards={boards.map(({ id, name, color, createdAt }) => ({
-            id,
-            name,
-            color,
-            createdAt,
-          }))}
+          boards={boards.map(
+            ({ id, boardsDataId, name, color, createdAt }) => ({
+              id,
+              boardsDataId,
+              name,
+              color,
+              createdAt,
+            })
+          )}
         />
       )}
     </>

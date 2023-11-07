@@ -5,47 +5,50 @@ import OpenIcon from "@mui/icons-material/Launch";
 
 type BoardCardProps = {
   id: string;
+  boardsDataId: string;
   name: string;
   color: string;
   createdAt: string;
 };
 
-const BoardCard = memo(({ id, color, name, createdAt }: BoardCardProps) => {
-  const navigate = useNavigate();
+const BoardCard = memo(
+  ({ id, boardsDataId, color, name, createdAt }: BoardCardProps) => {
+    const navigate = useNavigate();
 
-  return (
-    <Grid item xs={12} md={4} lg={3} xl={2}>
-      <Stack
-        p={2}
-        bgcolor="background.paper"
-        borderLeft="5px solid"
-        borderColor={color}
-      >
+    return (
+      <Grid item xs={12} md={4} lg={3} xl={2}>
         <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
+          p={2}
+          bgcolor="background.paper"
+          borderLeft="5px solid"
+          borderColor={color}
         >
-          <Box width="60%">
-            <Typography
-              whiteSpace="nowrap"
-              overflow="hidden"
-              textOverflow="ellipsis"
-              fontWeight={400}
-              variant="h6"
-            >
-              {name}
-            </Typography>
-          </Box>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Box width="60%">
+              <Typography
+                whiteSpace="nowrap"
+                overflow="hidden"
+                textOverflow="ellipsis"
+                fontWeight={400}
+                variant="h6"
+              >
+                {name}
+              </Typography>
+            </Box>
 
-          <IconButton onClick={() => navigate(`/boards/${id}`)}>
-            <OpenIcon />
-          </IconButton>
+            <IconButton onClick={() => navigate(`/boards/${boardsDataId}`)}>
+              <OpenIcon />
+            </IconButton>
+          </Stack>
+          <Typography variant="caption">Created at {createdAt}</Typography>
         </Stack>
-        <Typography variant="caption">Created at {createdAt}</Typography>
-      </Stack>
-    </Grid>
-  );
-});
+      </Grid>
+    );
+  }
+);
 
 export default BoardCard;

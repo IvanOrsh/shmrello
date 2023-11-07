@@ -14,7 +14,7 @@ import { useDeleteBoard } from "@features/deleteBoard";
 
 const BoardPage = () => {
   const navigate = useNavigate();
-  const { boardId } = useParams();
+  const { boardsDataId } = useParams();
 
   const fetchBoard = useFetchBoard();
 
@@ -28,9 +28,13 @@ const BoardPage = () => {
     userQuery: { boards, areBoardsFetched },
   } = useUserStore();
 
+  const boardId = useMemo(
+    () => boards.find((b) => b.boardsDataId === boardsDataId)?.id,
+    [boardsDataId, boards]
+  );
   const board = useMemo(
-    () => boards.find((b) => b.id === boardId),
-    [boardId, boards]
+    () => boards.find((b) => b.boardsDataId === boardsDataId),
+    [boardsDataId, boards]
   );
   const boardData = useMemo(() => data, [data]);
 
@@ -40,10 +44,11 @@ const BoardPage = () => {
 
   const handleFetchBoard = async () => {
     try {
-      const boardData = await fetchBoard(boardId!);
+      const boardData = await fetchBoard(boardsDataId!);
+
       if (boardData) {
         setData({
-          id: boardId!,
+          id: boardsDataId!,
           tabs: boardData.tabs,
           lastUpdated: boardData.lastUpdated.toDate().toLocaleString("en-US"),
         });
@@ -64,12 +69,12 @@ const BoardPage = () => {
 
     try {
       setLoading(true);
-      await deleteBoard(boardId!);
+      await deleteBoard(boardId!, boardsDataId!);
     } catch (err) {
       console.log(err);
       setLoading(false);
     }
-  }, [boardId, deleteBoard]);
+  }, [boardsDataId, deleteBoard]);
 
   useEffect(() => {
     if (!areBoardsFetched || !board) {
@@ -97,7 +102,7 @@ const BoardPage = () => {
       {/* TODO: more research needed */}
       <Tabs
         boardData={boardData!}
-        boardId={boardId!}
+        boardId={boardsDataId!}
         handleUpdateLastUpdated={handleUpdateLastUpdated}
       />
     </>

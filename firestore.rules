@@ -21,15 +21,15 @@ service cloud.firestore {
       function verifyDocFields() {
         let incomingData = request.resource.data;
         return incomingData.name is string && incomingData.name.matches('^[a-zA-Z0-9 \t]{1,20}$')
-          && incomingData.color is string && incomingData.color.size() <= 6 
-          && incomingData.createdAt is timestamp && incomingData.createdAt == request.time;
+          && incomingData.color is string && incomingData.color.size() <= 7
+          && incomingData.createdAt is timestamp && incomingData.createdAt == request.time
+          && incomingData.boardsDataId is string;
       }
 
       allow read: if isOwner(userId);
       allow delete: if isOwner(userId);
-      allow create: if isOwner(userId) && docOnlyHasRequiredFields(['color', 'createdAt', 'name'])  && verifyDocFields();
+      allow create: if isOwner(userId) && docOnlyHasRequiredFields(['name', 'color', 'createdAt', 'boardsDataId']) && verifyDocFields();
     }
-
 
     match /users/{userId}/boardsData/{boardId} {
 
@@ -41,8 +41,11 @@ service cloud.firestore {
           && incomingData.lastUpdated is timestamp && incomingData.lastUpdated == request.time
       }
 
-      allow get: if isOwner(userId)
-      allow update: if isOwner(userId) && docOnlyHasRequiredFields(['tabs', 'lastUpdated']) && verifyDocFields()
+      allow read: if isOwner(userId);
+      allow delete: if isOwner(userId);
+      allow get: if isOwner(userId);
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId) && docOnlyHasRequiredFields(['tabs', 'lastUpdated', "id"]) && verifyDocFields();
     }
 
   }

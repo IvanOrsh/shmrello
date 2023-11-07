@@ -10,16 +10,32 @@ const useCreateBoard = () => {
   const { addBoard, setToaster } = useUserStore();
 
   const createBoard = async ({ name, color }: CreateBoard) => {
-    const colRef = collection(db, `users/${currentUser?.uid}/boards`);
+    const boardsColRef = collection(db, `users/${currentUser?.uid}/boards`);
+    const boardsDataColRef = collection(
+      db,
+      `users/${currentUser?.uid}/boardsData`
+    );
 
     try {
-      const docRef = await addDoc(colRef, {
+      const boardDataDocRef = await addDoc(boardsDataColRef, {
+        tabs: {
+          todos: [],
+          inProgress: [],
+          completed: [],
+        },
+        lastUpdated: serverTimestamp(),
+      });
+
+      const boardDocRef = await addDoc(boardsColRef, {
+        boardsDataId: boardDataDocRef.id,
         name,
         color,
         createdAt: serverTimestamp(),
       });
+
       addBoard({
-        id: docRef.id,
+        id: boardDocRef.id,
+        boardsDataId: boardDataDocRef.id,
         name,
         color,
         createdAt: new Date().toLocaleString("en-US"),

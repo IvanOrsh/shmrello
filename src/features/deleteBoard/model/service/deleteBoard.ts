@@ -1,4 +1,4 @@
-import { doc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc, collection } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
@@ -14,11 +14,18 @@ const useDeleteBoard = () => {
   } = useUserStore();
   const navigate = useNavigate();
 
-  const deleteBoard = async (boardId: string) => {
+  const deleteBoard = async (boardId: string, boardsDataId: string) => {
     try {
       // delete the doc from the DB
       const docRef = doc(db, `users/${currentUser?.uid}/boards/${boardId}`);
       await deleteDoc(docRef);
+
+      // delete the doc from another collection
+      const boardsDataDocRef = doc(
+        db,
+        `users/${currentUser?.uid}/boardsData/${boardsDataId}`
+      );
+      await deleteDoc(boardsDataDocRef);
 
       // update the boards in the store
       const tempBoards = boards.filter((b) => b.id !== boardId);

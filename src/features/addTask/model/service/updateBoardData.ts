@@ -9,8 +9,12 @@ const useUpdateBoardData = () => {
   const { currentUser } = getAuth();
   const { setToaster } = useUserStore();
 
-  const updateBoardData = async (boardId: string, data: AddBoardData) => {
-    const docRef = doc(db, `users/${currentUser?.uid}/boardsData/${boardId}`);
+  const updateBoardData = async (boardsDataId: string, data: AddBoardData) => {
+    const docRef = doc(
+      db,
+      `users/${currentUser?.uid}/boardsData/${boardsDataId}`
+    );
+
     try {
       await updateDoc(docRef, { ...data, lastUpdated: serverTimestamp() });
     } catch (err) {

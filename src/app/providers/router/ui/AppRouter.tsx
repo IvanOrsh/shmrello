@@ -28,7 +28,7 @@ const AppRouter = () => {
           }
         />
         <Route
-          path="/boards/:boardId"
+          path="/boards/:boardsDataId"
           element={
             <PrivateOnlyRoute>
               <BoardPage />

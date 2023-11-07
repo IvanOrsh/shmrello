@@ -17,8 +17,6 @@ function App() {
       setLoginStatus(!!user);
     });
 
-    console.log(userQuery.isLoggedIn, userQuery.loader, userQuery.boards);
-
     return () => unsub();
   }, [setLoginStatus, userQuery.isLoggedIn, userQuery.loader]);
 

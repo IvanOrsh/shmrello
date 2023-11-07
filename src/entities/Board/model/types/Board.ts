@@ -5,6 +5,7 @@ export type Board = {
   name: string;
   color: string;
   createdAt: string;
+  boardsDataId: string;
 };
 
 export type BoardData = {

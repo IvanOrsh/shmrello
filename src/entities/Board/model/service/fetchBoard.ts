@@ -8,8 +8,11 @@ const useFetchBoard = () => {
   const { currentUser } = getAuth();
   const { setToaster } = useUserStore();
 
-  const fetchBoard = async (boardId: string) => {
-    const docRef = doc(db, `users/${currentUser?.uid}/boardsData/${boardId}`);
+  const fetchBoard = async (boardsDataId: string) => {
+    const docRef = doc(
+      db,
+      `users/${currentUser?.uid}/boardsData/${boardsDataId}`
+    );
     try {
       const docSnapshot = await getDoc(docRef);
       if (docSnapshot.exists()) {

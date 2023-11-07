@@ -16,9 +16,10 @@ const Boards = ({ boards }: BoardsProps) => {
           sm: 3,
         }}
       >
-        {boards.map(({ id, color, name, createdAt }) => (
+        {boards.map(({ id, boardsDataId, color, name, createdAt }) => (
           <BoardCard
             key={id}
+            boardsDataId={boardsDataId}
             id={id}
             name={name}
             color={color}
